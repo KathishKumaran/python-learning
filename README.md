@@ -778,3 +778,76 @@ the value is 80
 math constants: pi=3.141592653589793,e=2.718281828459045
 the current time is 2023-04-03T13:25:13.535274
 ```
+
+## Range
+* sequence representing an arithmetic progression of integers
+### range() signature
+> range(stop)
+
+> range(start,stop)
+
+> range(statr,stop,step)
+
+```
+for i in range(5):
+  print(i)
+
+a=list(range(5,10))
+b=list(range(10,20,2))
+print(a)
+print(b)
+
+s=[1,4,5,7,8]
+for i in range(len(s)):
+  print (s[i])
+
+for v in s:
+  print (v)
+
+```
+### output
+```
+0
+1
+2
+3
+4
+[5, 6, 7, 8, 9]
+[10, 12, 14, 16, 18]
+1
+4
+5
+7
+8
+1
+4
+5
+7
+8
+```
+### enumerate
+* constructs an iterable of (index,value) tuble around another iterable object
+
+```
+a=[23,44,67,4,2,233]
+for i in enumerate(a):
+  print (i)
+
+for i,b in enumerate(a):
+  print(f'i={i},b={b}')
+```
+### output
+```
+(0, 23)
+(1, 44)
+(2, 67)
+(3, 4)
+(4, 2)
+(5, 233)
+i=0,b=23
+i=1,b=44
+i=2,b=67
+i=3,b=4
+i=4,b=2
+i=5,b=233
+```
