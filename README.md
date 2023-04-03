@@ -537,7 +537,244 @@ print(add(2,3))
 * scopes in python do no correspond to the source code
 * for-loop and the like do not introduce new nested scopes
 
+```
+# Before
 
+count=1
+def show():
+  print(count)
 
+def set_value(c):
+   count=c
+   print(count)
 
+show()
+set_value(5)
+show()
 
+# After
+
+count=1
+def show():
+  print('-------',count)
+
+def set_value(c):
+   count=c
+   print('-----------',count)
+
+show()
+set_value(5)
+show()
+```
+### output
+
+```
+1
+5
+1
+------- 1
+----------- 5
+------- 1
+```
+
+## tuple
+* immutable sequences of arbitrary objects
+* Tuples have the similar syntax to list
+
+```
+t=('india',4.57,45)
+print(t)
+print(t[1])
+print(len(t))
+
+# iterate using for loop
+for items in t:
+  print(items)
+
+# concatenate using + operator
+print(t+(3.88,89))
+
+# repeat using * operator
+print(t*2)
+
+# nested tuples
+a=((1,2),(3,4),(5,6),(7,8))
+print(a[1][1])
+
+# single element tuple
+a=(12,)
+print(a)
+
+# empty tuple
+a=()
+print(a)
+
+def minmax(items):
+  return min(items),max(items)
+print(minmax([21,4,5,7,23]))
+```
+### output
+
+```
+('india', 4.57, 45)
+4.57
+3
+india
+4.57
+45
+('india', 4.57, 45, 3.88, 89)
+('india', 4.57, 45, 'india', 4.57, 45)
+4
+(12,)
+()
+(4, 23)
+```
+## Tuple unpacking
+* destructuring operation that unpacks data structures into named reference
+
+```
+def minmax(items):
+  return min(items),max(items)
+lower,upper=minmax([21,4,5,7,23])
+print(lower)
+print(upper)
+
+# nested tuple
+(a,(b,(c,d)))=(1,(2,(3,4)))
+print(a)
+print(b)
+print(c)
+print(d)
+
+# swap
+e='ball'
+f='cat'
+e,f=f,e
+print(f)
+print(e)
+
+print(tuple([3,5,6,7,3]))
+print(tuple('congratulations'))
+print(5 in (1,2,3,4,5,6,7))
+print(5 not in (5,6,7,8))
+```
+### output
+```
+4
+23
+1
+2
+3
+4
+ball
+cat
+(3, 5, 6, 7, 3)
+('c', 'o', 'n', 'g', 'r', 'a', 't', 'u', 'l', 'a', 't', 'i', 'o', 'n', 's')
+True
+False
+```
+### strings
+* strings are immutable. you cannot modify them in place
+* use str.join() to join strings
+
+### str.join()
+* concatenation with + results in temporaries
+* str.join() inserts a new separator between a collection of string
+* call join() on the separator string
+
+```
+animals=';'.join(['tiger','lion','zebra'])
+print(animals)
+
+ani_split=animals.split(';')
+print(ani_split)
+
+ani=''.join(['kathish','kumaran'])
+print(ani)
+```
+### output
+```
+tiger;lion;zebra
+['tiger', 'lion', 'zebra']
+kathishkumaran
+```
+### partition
+```
+a='unforgettable'.partition('forget')
+print(a)
+
+department,separator,country='civil:india'.partition(':')
+print(department)
+print(country)
+```
+### output
+```
+('un', 'forget', 'table')
+civil
+india
+```
+### string formatting
+```
+import math
+
+a= 'the age of {0} is {1}'.format('jim',20)
+print(a)
+
+b='he is {0} in {1}. god is {0} all the {2}'.format('goog','all','time')
+print(b)
+
+c='he is {} in {} our {}'.format('good','all','situation')
+print(c)
+
+d='Curent position {latitude} {longitude}'.format(latitude='30N',longitude='29E')
+print(d)
+
+e='position x={pos[0]},y={pos[1]},z={pos[2]}'.format(pos=(23,34,56))
+print(e)
+
+f='math constants: pi={m.pi},e={m.e}'.format(m=math)
+print(f)
+
+g='math constants: pi={m.pi:.3f},e={m.e:.2f}'.format(m=math)
+print(g)
+
+value=4*20
+h='the value is {value}'.format(value=value)
+print(h)
+```
+### output
+```
+the age of jim is 20
+he is goog in all. god is goog all the time
+he is good in all our situation
+Curent position 30N 29E
+position x=23,y=34,z=56
+math constants: pi=3.141592653589793,e=2.718281828459045
+math constants: pi=3.142,e=2.72
+the value is 80
+```
+### f-string
+```
+import math
+import datetime
+
+g=f'math constants: pi={math.pi:.3f},e={math.e:.2f}'
+print(g)
+
+value=4*20
+h=f'the value is {value}'
+print(h)
+
+g=f'math constants: pi={math.pi},e={math.e}'
+print(g)
+
+b=f'the current time is {datetime.datetime.now().isoformat()}'
+print(b)
+```
+### output
+```
+math constants: pi=3.142,e=2.72
+the value is 80
+math constants: pi=3.141592653589793,e=2.718281828459045
+the current time is 2023-04-03T13:25:13.535274
+```

@@ -21,7 +21,6 @@ def main(url):
   words=fetch_word(url)
   print_items(words)
 
-
 if __name__=='__main__':
   # main(sys.argv[1])
   main('http://sixty-north.com/c/t.txt')
