@@ -216,5 +216,328 @@ green 34434
 black 8765
 red 5277
 ```
+## Example:
+```
+from urllib.request import urlopen
+story=urlopen('http://sixty-north.com/c/t.txt')
+story_words=[]
+story_decode_words=[]
+for line in story:
+   line_words=line.split()
+   line_decode=line.decode('utf-8').split()
+   for word in line_words:
+     story_words.append(word)
+   for word in line_decode:
+    story_decode_words.append(word)
+print(story_words)
+print(story_decode_words)
+
+```
+
+## output
+```
+[b'It', b'was', b'the', b'best', b'of', b'times', b'it', b'was', b'the', b'worst', b'of', b'times', b'it', b'was', b'the', b'age', b'of', b'wisdom', b'it', b'was', b'the', b'age', b'of', b'foolishness', b'it', b'was', b'the', b'epoch', b'of', b'belief', b'it', b'was', b'the', b'epoch', b'of', b'incredulity', b'it', b'was', b'the', b'season', b'of', b'Light', b'it', b'was', b'the', b'season', b'of', b'Darkness', b'it', b'was', b'the', b'spring', b'of', b'hope', b'it', b'was', b'the', b'winter', b'of', b'despair', b'we', b'had', b'everything', b'before', b'us', b'we', b'had', b'nothing', b'before', b'us', b'we', b'were', b'all', b'going', b'direct', b'to', b'Heaven', b'we', b'were', b'all', b'going', b'direct', b'the', b'other', b'way', b'in', b'short', b'the', b'period', b'was', b'so', b'far', b'like', b'the', b'present', b'period', b'that', b'some', b'of', b'its', b'noisiest', b'authorities', b'insisted', b'on', b'its', b'being', b'received', b'for', b'good', b'or', b'for', b'evil', b'in', b'the', b'superlative', b'degree', b'of', b'comparison', b'only']
+['It', 'was', 'the', 'best', 'of', 'times', 'it', 'was', 'the', 'worst', 'of', 'times', 'it', 'was', 'the', 'age', 'of', 'wisdom', 'it', 'was', 'the', 'age', 'of', 'foolishness', 'it', 'was', 'the', 'epoch', 'of', 'belief', 'it', 'was', 'the', 'epoch', 'of', 'incredulity', 'it', 'was', 'the', 'season', 'of', 'Light', 'it', 'was', 'the', 'season', 'of', 'Darkness', 'it', 'was', 'the', 'spring', 'of', 'hope', 'it', 'was', 'the', 'winter', 'of', 'despair', 'we', 'had', 'everything', 'before', 'us', 'we', 'had', 'nothing', 'before', 'us', 'we', 'were', 'all', 'going', 'direct', 'to', 'Heaven', 'we', 'were', 'all', 'going', 'direct', 'the', 'other', 'way', 'in', 'short', 'the', 'period', 'was', 'so', 'far', 'like', 'the', 'present', 'period', 'that', 'some', 'of', 'its', 'noisiest', 'authorities', 'insisted', 'on', 'its', 'being', 'received', 'for', 'good', 'or', 'for', 'evil', 'in', 'the', 'superlative', 'degree', 'of', 'comparison', 'only']
+```
+
+## Function
+* Functions are defined using the def keyword followed by the function name , an argument list in the parenthesis and a colon to start a new block.
+* The code inside the function block must be intended
+* We use return keyword to return a value from the function
+
+## dunder
+* our way of pronouncing special names
+* Instead of "underscore underscore name underscore underscore" we will say "dunder name"
+```
+def square(x):
+   return x * x
+print(square(6))
+
+def launch():
+  print('hello')
+launch()
+
+def odd_or_even(n):
+  if n%2==0:
+    print('even')
+  print('odd')
+odd_or_even(5)
+
+def nth_root(r,n):
+   return r ** (1/n)
+# print(nth_root(5,0.5))
+
+def ordinal_suffix(value):
+  s=str(value)
+  if s.endswith('11'):
+    return 'th'
+  if s.endswith('12'):
+    return 'td'
+  if s.endswith('13'):
+    return 'gh'
+# print(ordinal_suffix(113))
+
+def ordinal(value):
+  return str(value)
+# print(ordinal(613))
+
+def display_nth_root(r,n):
+  root=nth_root(r,n)
+  message='The'+ ordinal(n) + " is there " \
+  + str(r)+" yes "+ str(root)
+  print('message',message)
+display_nth_root(5,0.5)
+```
+## output
+```
+36
+hello
+odd
+message The0.5 is there 5 yes 25.0
+```
+
+## Function
+
+* A function is a block of code which only runs when it is called.
+
+* You can pass data, known as parameters, into a function.
+
+* A function can return data as a result.
+
+## Assigning variable
+
+```
+a=2
+b=4
+print(a)
+
+a=b
+print(a)
+
+a=10
+print(10)
+```
+### output
+```
+2
+4
+10
+```
+
+## id()
+* Returns a unique integer identifiers for an object that is constant for life of a object.
+
+```
+a=4
+print(id(a))
+
+b=5
+print(id(b))
+
+b=a
+print(id(a)==id(b))
+
+t=10
+print(id(t))
+t +=2
+print(id(t))
+```
+### output
+```
+9793184
+9793216
+True
+9793376
+9793440
+```
+## Mutable objects
+
+```
+a=[1,2,3]
+print(a)
+b=a
+print(b)
+b[1]=5
+print(b)
+print(a)
+print(b is a)
+```
+### output
+```
+[1, 2, 3]
+[1, 2, 3]
+[1, 5, 3]
+[1, 5, 3]
+True
+```
+
+* Python doesn't have the variables in the sense of boxes holding a value
+* Python has named reference to the object
+
+## Value Vs Identity Equality
+
+* The == operator compares the value or equality of two objects, whereas the Python is operator checks whether two variables point to the same object in memory.
+
+```
+a=[1,23,4]
+b=[1,23,4]
+print(a==b)
+print(a is b)
+```
+### output
+```
+True
+False
+```
+
+## Passing Arguments and Return Values
+* Function arguments are transferred using pass-by-object-reference
+* Reference to objects are copied, not the object themselves
+
+```
+a=[1,2,3,4]
+def modify(b):
+  b.append(23)
+  print("b=",b)
+modify(a)
+print("a=",a)
+
+# Replacing arguments Values
+c=[1,2,3,4]
+def modify(d):
+  d=[33,44,55]
+  print("d=",d)
+modify(a)
+print("c=",c)
+
+# Mutable arguments
+def replace_contents(e):
+  e[0]=23
+  e[1]=56
+  e[2]=67
+  print("e=",e)
+f=[1,4,5,6]
+replace_contents(f)
+print("f=",f)
+
+# Return semantics
+def f(d):
+  return d
+c=[1,2,3]
+e=f(c)
+print("e----------",e)
+print(c is e)
+```
+### output
+```
+b= [1, 2, 3, 4, 23]
+a= [1, 2, 3, 4, 23]
+d= [33, 44, 55]
+c= [1, 2, 3, 4]
+e= [23, 56, 67, 6]
+f= [23, 56, 67, 6]
+e---------- [1, 2, 3]
+True
+```
+
+## function Arguments
+* Arguments with default values must come after those without default values
+
+```
+def banner(message,border="_"):
+  line=border * len(message)
+  print(line)
+  print(message)
+  print(line)
+banner("blue")
+banner("tree, plants","*")
+banner(border='+',message="geen")
+banner('white, red',border="^")
+```
+### output
+```
+____
+blue
+____
+************
+tree, plants
+************
+++++
+geen
+++++
+^^^^^^^^^^
+white, red
+^^^^^^^^^^
+```
+
+## Default Value Evaluation
+* Remember that def is a statement executed at the runtime
+* Default arguments are evaluated when def is executed
+* immutable default value don't cause problems
+* Mutable default value can cause confusing effects
+* So always use immutable object for default values
+
+```
+# Mutable default values
+
+def add(menu=[]):
+  menu.append('ten')
+  return menu
+numbers=['one','two']
+print(add(numbers))
+print(add())
+print(add())
+print(add())
+
+# Immutable default values
+
+def addition(menu=None):
+  if menu is None:
+    menu=[]
+  menu.append('one')
+  return menu
+print(addition())
+print(addition())
+print(addition())
+```
+### output
+```
+['one', 'two', 'ten']
+['ten']
+['ten', 'ten']
+['ten', 'ten', 'ten']
+['one']
+['one']
+['one']
+```
+
+## Python's Type System
+* Dynamic typing means the type of an object reference isn't resolved untill the program is running and need not specified up front when the program is written
+* Python will not generally perform implicit conversions between types
+
+```
+def add(a,b):
+  return a+b
+print(add(2,3))
+
+# print(add("the sum is",12))     type error
+```
+
+## Scopes in Python
+
+* LEGB
+* L - Local
+* E - Enclosing
+* G - Global
+* B - Built-in
+* Local : inside the current function
+* Enclosing : inside the enclosing function
+* Global : at the top level of the module
+* Built-in : in the secial builtins modules
+* scopes in python do no correspond to the source code
+* for-loop and the like do not introduce new nested scopes
+
+
+
 
 
