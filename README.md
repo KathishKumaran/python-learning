@@ -852,3 +852,252 @@ i=3,b=4
 i=4,b=2
 i=5,b=233
 ```
+## Set
+* unordered collection of unique elements
+* sets are mutable
+* each elements in a set must be immutable
+* common use of set is to efficiently remove duplicate items from the series of object
+* sets are iterable, although the order is arbitrary
+
+```
+a={1,45,76,87,98,4,23}
+print(a)
+
+b=set([32,45,76,12,23,67])
+print(b)
+
+# iteration
+for i in a:
+  print(i)
+
+print(32 in b)
+print(76 not in b)
+
+# add
+a.add(12)
+print(a)
+
+# update
+b.update([2,3])
+print(b)
+
+# remove
+b.remove(76)
+print(b)
+
+# discard
+b.discard(23)
+print(b)
+
+# copy
+e=b.copy()
+print(e)
+
+
+```
+### output
+```
+{1, 98, 4, 76, 45, 23, 87}
+{32, 67, 12, 76, 45, 23}
+1
+98
+4
+76
+45
+23
+87
+True
+False
+{1, 98, 4, 76, 45, 12, 23, 87}
+{32, 2, 67, 3, 12, 76, 45, 23}
+{32, 2, 67, 3, 12, 45, 23}
+{32, 2, 67, 3, 12, 45}
+{32, 2, 67, 3, 12, 45}
+```
+> set algebra:union,difference,intersection,subset,superset and disjoints
+
+```
+a={'hai','hello','hey'}
+b={'hai','how','what','where'}
+c={'hai'}
+d={'where'}
+e={'wherever'}
+
+# union
+print(a.union(b))
+print(a.union(b)==b.union(a))
+
+# intersection
+print(a.intersection(b))
+print(a.intersection(b)==b.intersection(a))
+
+# difference
+print(a.difference(b))
+print(a.difference(b)==b.difference(a))
+
+print(a.symmetric_difference(b))
+print(a.symmetric_difference(b)==b.symmetric_difference(a))
+
+# subset
+print(d.issubset(b))
+print(b.issubset(d))
+
+# superset
+print(d.issuperset(b))
+print(b.issuperset(d))
+
+# disjoints
+print(d.isdisjoint(e))
+print(b.isdisjoint(c))
+```
+### output
+```
+{'hey', 'hello', 'how', 'hai', 'what', 'where'}
+True
+{'hai'}
+True
+{'hey', 'hello'}
+False
+{'hey', 'hello', 'what', 'how', 'where'}
+True
+True
+False
+False
+True
+True
+False
+```
+
+## Dictionaries
+* keys must be immutable
+* values may be mutable
+* As with lists, dictionary copy is shallow
+
+```
+names_ages=[('raja',23),('siva',34),('mari',54),('rajesh',34)]
+a=dict(names_ages)
+print(a)
+
+b=dict(a='alpha',b='beta',c='gamma')
+print(b)
+
+c=b.copy()
+print("-----------",c)
+
+e=dict(c)
+print('e---',e)
+d=dict(d='dog',e='elephant')
+e.update(d)
+print(e)
+
+e.update(d='domestic',f='fox')
+print('e----->',e)
+```
+### output
+```
+{'raja': 23, 'siva': 34, 'mari': 54, 'rajesh': 34}
+{'a': 'alpha', 'b': 'beta', 'c': 'gamma'}
+----------- {'a': 'alpha', 'b': 'beta', 'c': 'gamma'}
+e--- {'a': 'alpha', 'b': 'beta', 'c': 'gamma'}
+{'a': 'alpha', 'b': 'beta', 'c': 'gamma', 'd': 'dog', 'e': 'elephant'}
+e-----> {'a': 'alpha', 'b': 'beta', 'c': 'gamma', 'd': 'domestic', 'e': 'elephant', 'f': 'fox'}
+```
+### Dictionary Iteration
+* Dictionaries yields the next key on each iteration
+* Values can be retrieved using the square bracket operator
+
+### dict.update()
+* adds entries from one dictionaries to another
+* calls this on the dictionary that is to be updated
+
+### dict.items()
+* iterates over keys and values in tandem
+* yields a (key,value) tuple on each iteration
+
+```
+colors=dict(one='green',two='red',three='yellow')
+for key in colors:
+  print(f'{key}====>{colors[key]}')
+
+  # for only values
+  for value in colors.values():
+    print(value)
+
+# keys only
+  for key in colors.keys():
+    print(key)
+
+# key and values
+  for key,value in colors.items():
+    print(f'{key}======>{value}')
+
+```
+### output
+```
+one====>green
+green
+red
+yellow
+one
+two
+three
+one======>green
+two======>red
+three======>yellow
+two====>red
+green
+red
+yellow
+one
+two
+three
+one======>green
+two======>red
+three======>yellow
+three====>yellow
+green
+red
+yellow
+one
+two
+three
+one======>green
+two======>red
+three======>yellow
+```
+### pprint
+* without the "as pp" ,the pprint function would mask the pprint module
+* This kind of duplicate naming is probably best avoided in your own API's
+
+```
+from pprint import pprint as pp
+
+z={'H':1,'J':3,'K':7,'D':8}
+print(z)
+
+# delete
+del z['K']
+print(z)
+
+h={'H':[1,3,4,7],'J':3,'K':7,'D':8}
+print(h)
+h['H'] += [8,9,0]
+print(h)
+h['N'] =[4,6,8]
+print(h)
+
+from pprint import pprint as pp
+
+pp(h)
+
+
+```
+### output
+```
+{'H': 1, 'J': 3, 'K': 7, 'D': 8}
+{'H': 1, 'J': 3, 'D': 8}
+{'H': [1, 3, 4, 7], 'J': 3, 'K': 7, 'D': 8}
+{'H': [1, 3, 4, 7, 8, 9, 0], 'J': 3, 'K': 7, 'D': 8}
+{'H': [1, 3, 4, 7, 8, 9, 0], 'J': 3, 'K': 7, 'D': 8, 'N': [4, 6, 8]}
+{'D': 8, 'H': [1, 3, 4, 7, 8, 9, 0], 'J': 3, 'K': 7, 'N': [4, 6, 8]}
+```
