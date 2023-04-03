@@ -19,6 +19,7 @@ def show():
   print('-------',count)
 
 def set_value(c):
+   global count
    count=c
    print('-----------',count)
 
