@@ -1175,6 +1175,34 @@ True
 [2, 4, 6, 8, 9, 7, 5]
 False
 ```
+
+```
+a=[[1,2],[3,4]]
+b=a[:]
+print(b)
+print(a is b)
+print(a==b)
+
+print(a[0]==b[0])
+
+a[1].append(5)
+print(a)
+
+s=[[1,3]]*4
+print(s)
+s[2].append(6)
+print(s)
+```
+### output
+```
+[[1, 2], [3, 4]]
+False
+True
+True
+[[1, 2], [3, 4, 5]]
+[[1, 3], [1, 3], [1, 3], [1, 3]]
+[[1, 3, 6], [1, 3, 6], [1, 3, 6], [1, 3, 6]]
+```
 ### list.index()
 * find the location of an object in a list
 * returns the index of the first item element which is equal to the argument
@@ -1297,3 +1325,98 @@ print(list(j))
 <list_reverseiterator object at 0x7fcb33e5d970>
 [89, 77, 12, 34, 56]
 ```
+## Exceptions
+## Exception Handling
+
+> Mechanism for interrupting normal program flow and continuing in surrounding context or code block
+
+> Python Exceptions are similar to exceptions in languages like java and c++
+
+### Exceptions:Key concepts
+## 1.Raising an exception
+* the event of interrupting normal flow is called the act of raising an exception
+
+## 2.Handling an exception
+* the raised exception must be handled upon which control flow is transferred to the exception handler
+
+## 3.Unhandled Exception
+* If an exception propagates up the callstack to the start of the program then an unhandled exception will cause the program to terminate
+
+## 4.Exception Objects
+* An exception object containing information about where and why an exception event occured is transported from the point at which the exception was raised to the exception handler so that the handler can interrogate the exception object and take appropriate action
+
+## Exception and control flow
+```
+
+a={'one':'1','two':'2','three':'3','four':'4'}
+
+def convert(s):
+  number=''
+  for i in s:
+    number += a[i]
+  x=int(number)
+  return x
+
+print(convert('one two three four'.split()))
+
+# print(convert('around two three'.split()))      kerError
+```
+### output
+```
+1234
+```
+## Handling Exceptions
+```
+a={'one':'1','two':'2','three':'3','four':'4'}
+def convert(s):
+  """ Convert a string to a integer"""
+  try:
+    number=''
+    for i in s:
+      number += a[i]
+    x=int(number)
+    print(f'success! x={x}')
+  except KeyError:
+    print('failed in keyerror')
+    x=-1
+  except TypeError:
+    print('failed in typeerror')
+    x=-1
+  print (x)
+convert('one'.split())
+convert('five'.split())
+convert(5)
+```
+### output
+```
+success! x=1
+1
+failed in keyerror
+-1
+failed in typeerror
+-1
+```
+
+> Exceptions resulting from programmer error:
+* Indentation error
+* Syntax error
+* Name error
+
+> these should always never be caught
+
+
+## Exceptions and protocol
+* sequences should raise Indexerror for out of bound indexing
+* Exceptions must be implemented and documented correctly
+* Existing built-in exceoptions are often the right one to use
+
+## common exception types
+### IndexError
+* An integer index is out of range
+
+### ValueError
+* An object is of correct type but has an inappropriate value
+
+### KeyError
+* A lookup in a mapping failed
+
