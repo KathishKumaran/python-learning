@@ -1,0 +1,7 @@
+a='he is good in all the works and he is such a wonderfull person to speak'.split()
+print(a)
+i=a.index('works')
+print(i)
+print(a[i])
+b=a.count('he')
+print(b)

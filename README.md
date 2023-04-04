@@ -1101,3 +1101,199 @@ pp(h)
 {'H': [1, 3, 4, 7, 8, 9, 0], 'J': 3, 'K': 7, 'D': 8, 'N': [4, 6, 8]}
 {'D': 8, 'H': [1, 3, 4, 7, 8, 9, 0], 'J': 3, 'K': 7, 'N': [4, 6, 8]}
 ```
+
+## Protocols
+* a set of operations that a type must support to implement the protocol
+* do not need to be defined as interfaces or base classes
+* Types only need to provide functioning implementations
+
+> protocol:container (str,list,dict,range,tuple,set,bytes)
+
+> protocol:sized (str,list,dict,range,tuple,set,bytes)
+
+> protocol:iterable (str,list,dict,range,tuple,set,bytes)
+
+> protocol:sequence (str,list,dict,range,tuple)
+
+> protocol:mutable sequence (list)
+
+> protocol:mutable set (set)
+
+> protocol:mutable mapping (dict)
+
+## Lists
+### negative indices
+* index from the end of sequences using negative numbers
+* the last element is at index -1
+
+```
+a=[1,-4,6,8.9,9]
+print(a[-1])
+print(a[-5])
+print(a[0])
+print(a[-0])
+print(a[2])
+```
+### output
+```
+9
+1
+1
+1
+6
+```
+
+### slicing
+* Extended form of indexing for referring to a portion of a list or other sequences
+* Syntax: a_list[start:stop]
+
+```
+a=[2,4,6,8,9,7,5]
+print(a[1:-1])
+print(a[2:6])
+print(a[3:])
+print(a[:4])
+print(a[:])
+
+b=a
+print(b)
+print(b is a)
+
+c=b[:]
+print(c)
+print(c is b)
+```
+### output
+```
+[4, 6, 8, 9, 7]
+[6, 8, 9, 7]
+[8, 9, 7, 5]
+[2, 4, 6, 8]
+[2, 4, 6, 8, 9, 7, 5]
+[2, 4, 6, 8, 9, 7, 5]
+True
+[2, 4, 6, 8, 9, 7, 5]
+False
+```
+### list.index()
+* find the location of an object in a list
+* returns the index of the first item element which is equal to the argument
+
+```
+a='he is good in all the works and he is such a wonderfull person to speak'.split()
+print(a)
+i=a.index('works')
+print(i)
+print(a[i])
+b=a.count('he')
+print(b)
+```
+### output
+```
+['he', 'is', 'good', 'in', 'all', 'the', 'works', 'and', 'he', 'is', 'such', 'a', 'wonderfull', 'person', 'to', 'speak']
+6
+works
+2
+```
+### del
+* remove an element from a list by index
+* Syntax:del a_list[index]
+
+```
+a='he is good in all the works and he is such a wonderfull person to speak'.split()
+
+del a[5]
+print(a)
+a.remove('is')
+print(a)
+
+i=a.index('such')
+del a[i]
+print(a)
+```
+### output
+```
+['he', 'is', 'good', 'in', 'all', 'works', 'and', 'he', 'is', 'such', 'a', 'wonderfull', 'person', 'to', 'speak']
+['he', 'good', 'in', 'all', 'works', 'and', 'he', 'is', 'such', 'a', 'wonderfull', 'person', 'to', 'speak']
+['he', 'good', 'in', 'all', 'works', 'and', 'he', 'is', 'a', 'wonderfull', 'person', 'to', 'speak']
+```
+### list.insert()
+* insert an item into a list
+* accepts an item and index of the new item
+
+```
+a='my name is kathish'.split()
+a.insert(4,'kumaran')
+print(a)
+print(' '.join(a))
+
+m=[1,3,4,6,8]
+n=[2.4,6,8,9]
+o=m+n
+print(o)
+o+=[89,100]
+print(o)
+o.extend([101,102])
+print(o)
+```
+### output
+```
+['my', 'name', 'is', 'kathish', 'kumaran']
+my name is kathish kumaran
+[1, 3, 4, 6, 8, 2.4, 6, 8, 9]
+[1, 3, 4, 6, 8, 2.4, 6, 8, 9, 89, 100]
+[1, 3, 4, 6, 8, 2.4, 6, 8, 9, 89, 100, 101, 102]
+```
+### list.reverse() and list.sort()
+* common operations that modify a list in place
+* sort method accepts two arguments (key and reverse)
+
+```
+a=[1,2,3,43]
+# reverse
+a.reverse()
+print(a)
+
+# sort
+a.sort()
+print(a)
+a.sort(reverse=True)
+print(a)
+```
+### output
+```
+[43, 3, 2, 1]
+[1, 2, 3, 43]
+[43, 3, 2, 1]
+```
+### key parameter to list.sort()
+* can be any called object that accepts a single parameter
+* items passed to callable and sorted on its return value
+```
+a='strong  is very he'.split()
+a.sort(key=len)
+print(a)
+```
+### output
+```
+['is', 'he', 'very', 'strong']
+```
+## Reversing and Sorting into copies
+* reversed and sorted are out-of-place equivalents to list.reverse() and list.sort()
+* They return a reverse iterator and a new list, respectively
+
+```
+x=[4,2,6,2,7]
+y=sorted(x)
+print(y)
+z=[56,34,12,77,89]
+j=reversed(z)
+print(j)
+print(list(j))
+```
+### output
+```
+[2, 2, 4, 6, 7]
+<list_reverseiterator object at 0x7fcb33e5d970>
+[89, 77, 12, 34, 56]
+```
