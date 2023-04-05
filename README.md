@@ -1420,3 +1420,75 @@ failed in typeerror
 ### KeyError
 * A lookup in a mapping failed
 
+## Comprehensions
+* concise syntax for describing lists, sets and dictionaries
+* readable and expressive
+* close to natural languages
+
+### list Comprehensions
+
+```
+words='My name is kathish'.split()
+print(words)
+
+a=[len(word) for word in words]
+print(a)
+
+
+# similar to
+# lengths=[]
+# for word in words:
+#   lengths.append(len(word))
+# print(lengths)
+
+from math import factorial
+
+f=[len(str(factorial(x))) for x in range(20)]
+print(f)
+```
+### output
+```
+['My', 'name', 'is', 'kathish']
+[2, 4, 2, 7]
+[1, 1, 1, 1, 2, 3, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 18]
+```
+
+### Set Comprehensions
+```
+from math import factorial
+
+f={len(str(factorial(x))) for x in range(20)}
+print(f)
+```
+### output
+```
+{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 18}
+```
+
+## Dictionary Comprehensions
+* Dictionary comprehensions don't work directly on dict sources
+* use dict.items() to get keys and values from dict sources
+
+```
+country_to_capital={'United Kingdom':'London',
+                    'Brazil':'Brasilia',
+                    'Morroco':'Rabat',
+                    'Sweden':'Stockholm'}
+
+capital_to_country={capital:country for country,capital in country_to_capital.items()}
+print(capital_to_country)
+
+from pprint import pprint as pp
+
+pp(capital_to_country)
+```
+### output
+```
+{'London': 'United Kingdom', 'Brasilia': 'Brazil', 'Rabat': 'Morroco', 'Stockholm': 'Sweden'}
+{'Brasilia': 'Brazil',
+ 'London': 'United Kingdom',
+ 'Rabat': 'Morroco',
+ 'Stockholm': 'Sweden'}
+
+```
+
