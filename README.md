@@ -1496,4 +1496,412 @@ print(b)
 {'h': 'hotel', 'f': 'fox', 'e': 'elephant'}
 
 ```
+## Filtering Comprehensions
+```
+from math import sqrt
 
+def is_prime(x):
+  if x<2:
+    return False
+  for i in range(2, int(sqrt(x))+1):
+    if x%i == 0:
+      return False
+  return True
+
+print([x for x in range(101) if is_prime(x)])
+
+from pprint import pprint as pp
+
+prime_square_divisors={x*x :(1,x,x*x) for x in range(20) if is_prime(x)}
+pp(prime_square_divisors)
+```
+### output
+```
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+{4: (1, 2, 4),
+ 9: (1, 3, 9),
+ 25: (1, 5, 25),
+ 49: (1, 7, 49),
+ 121: (1, 11, 121),
+ 169: (1, 13, 169),
+ 289: (1, 17, 289),
+ 361: (1, 19, 361)}
+```
+## Iteration Protocols
+
+> Iterable: can be passed to iter() to produce an iterator
+
+> Iterator: can be passed to next() to get the next value in the sequences
+
+```
+a=['one','two','three','four']
+b=iter(a)
+c=next(b)
+print(c)
+d=next(b)
+print(d)
+
+
+def first(a):
+  b=iter(a)
+  try:
+    c=next(b)
+    print(c)
+  except StopIteration:
+    raise ValueError('a is empty')
+first(['one','two','three','four'])
+first({'one','two','three','four'})
+# first(set())                               ValueError
+```
+### output
+```
+one
+two
+one
+three
+```
+## Generator Functions
+* iterable defined by functions
+* lazy evaluation
+* can model sequences with no definite end
+* composable into pipelines
+
+### yield
+* Generator function must include atleast one yield statement
+
+```
+def gen():
+  print('its a')
+  yield 1
+  print('its b')
+  yield 2
+  print('its c')
+  yield 3
+  print('about to return')
+
+result=gen()
+print(next(result))
+print(next(result))
+print(next(result))
+print(next(result))
+```
+### output
+```
+its a
+1
+its b
+2
+its c
+3
+about to return
+Traceback (most recent call last):
+  File "generator-comprehension.py", line 14, in <module>
+    print(next(result))
+StopIteration
+```
+### maintaining state in generator
+```
+def take(count,iterable):
+  counter=0
+  for item in iterable:
+    if counter==count:
+      return
+    counter+=1
+    yield item
+
+def distinct(iterable):
+  seen=set()
+  for item in iterable:
+    for item in seen:
+      continue
+    yield item
+    seen.add(item)
+
+def run_pipeline():
+  items=[3,6,6,2,1,1]
+  for item in take(3,list(distinct(items))):
+    print (item)
+
+run_pipeline()
+```
+### output
+```
+3
+3
+3
+```
+
+## Laziness and the Infinite
+* Generators only do enough work to produce requested data
+* This allows generators to model infinite (or just very large) sequences
+* Examples of such sequences are sensor readings, mathematical sequences and contents of large files
+
+```
+def lucas():
+  yield 2
+  a=1
+  b=2
+  while True:
+    yield b
+    a,b=b,a+b
+
+for x in lucas():
+  print(x)
+```
+## Generator Expressions
+* To recreate generator from a generator expression, you must execute the expression again
+
+```
+a=(x*x for x in range(1,10))
+print(list(a)[-10:])
+print(list(a))
+```
+### output
+```
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+[]
+```
+
+## Classes
+* Define the structure and behaviour of objects
+* Act as a template for creating new objetcs
+* Classes control an object's initial state, attributes and methods
+* Classes can make complex problem tractable
+* But they can make simple problem unnecessarily complex
+* Python let you strike the right balance between the functions and classes
+
+```
+class Flight:
+
+  def number(self):
+    print ('SN06')
+f=Flight()
+f.number()
+
+# same
+Flight.number(f)
+```
+### output
+```
+SN06
+SN06
+```
+## __init__()
+* Instance method for initializing new object
+* It is an initializer not a constructor
+* self is similar to this in java , c# , c++
+
+### why _number?
+* Avoid name clash with number()
+* By convention, implementation details start with underscore
+
+```
+class Flight:
+
+  def __init__(self,number):
+    self._number=number
+
+  def number(self):
+    return self._number
+
+f=Flight('SN06')
+print(f._number)
+print(f.number())
+print(Flight.number(f))
+```
+### output
+```
+SN06
+SN06
+SN06
+```
+```
+class Flight:
+
+  def __init__(self,number):
+    if not number[:2].isalpha():
+      raise ValueError(f"no airline code in '{number}'")
+    if not number[:2].isupper():
+      raise ValueError(f"Invalid airline code '{number}'")
+    if not (number[2:].isdigit() and int(number[2:])<=9999):
+      raise ValueError(f"invalid route number '{number}'")
+    self._number=number
+
+  def number(self):
+    return self._number
+
+f=Flight('SN06')
+print(f._number)
+# g=Flight('060')
+# print(g._number)
+# h=Flight('sn060')
+i=Flight('snabd')
+# print(h._number)
+print(i._number)
+```
+### output
+```
+SN06
+Traceback (most recent call last):
+  File "init-instance.py", line 20, in <module>
+    i=Flight('snabd')
+  File "init-instance.py", line 7, in __init__
+    raise ValueError(f"Invalid airline code '{number}'")
+ValueError: Invalid airline code 'snabd'
+```
+### Example:
+```
+class Flight:
+  """ A flight with a particular passenger aircraft"""
+
+  def __init__(self,number,aircraft):
+    if not number[:2].isalpha():
+      raise ValueError(f"no airline code in '{number}'")
+    if not number[:2].isupper():
+      raise ValueError(f"Invalid airline code '{number}'")
+    if not (number[2:].isdigit() and int(number[2:])<=9999):
+      raise ValueError(f"invalid route number '{number}'")
+
+    self._number=number
+    self._aircraft=aircraft
+
+  def aircraft_model(self):
+    return self._aircraft.model()
+
+  def number(self):
+    return self._number
+
+  def airline(self):
+    return self._number[:2]
+
+
+
+class Aircraft:
+
+  def __init__(self,registration,model,num_rows,num_seats_per_row):
+    self._registration=registration
+    self._model=model
+    self._num_rows=num_rows
+    self._num_seats_per_row=num_seats_per_row
+
+  def registration(self):
+    return self._registration
+
+  def model(self):
+    return self._model
+
+  def seating_plan(self):
+    return (range(1,self._num_rows+1),'ABCDEFGHJK'[:self._num_seats_per_row])
+
+f=Flight('BA758',Aircraft('G-EUPT','Airbus 0ES',num_rows=22,num_seats_per_row=7))
+print(f.aircraft_model())
+
+```
+### output
+```
+Airbus 0ES
+```
+
+### Example : Booking seats
+```
+class Flight:
+  """ A flight with a particular passenger aircraft"""
+
+  def __init__(self,number,aircraft):
+    if not number[:2].isalpha():
+      raise ValueError(f"no airline code in '{number}'")
+    if not number[:2].isupper():
+      raise ValueError(f"Invalid airline code '{number}'")
+    if not (number[2:].isdigit() and int(number[2:])<=9999):
+      raise ValueError(f"invalid route number '{number}'")
+
+    self._number=number
+    self._aircraft=aircraft
+    rows,seats=self._aircraft.seating_plan()
+    self._seating=[None]+[{letter:None for letter in seats}for _ in rows]
+
+  def aircraft_model(self):
+    return self._aircraft.model()
+
+  def number(self):
+    return self._number
+
+  def airline(self):
+    return self._number[:2]
+
+  def allocate_seat(self,seat,passenger):
+    rows,seat_letters=self._aircraft.seating_plan()
+    letter=seat[-1]
+    if letter not in seat_letters:
+      raise ValueError(f'Invalid seat letter {letter}')
+
+    row_text=seat[:-1]
+    try:
+      row=int(row_text)
+    except ValueError:
+      raise ValueError(f'Invalid seat row {row_text}')
+
+    if row not in rows:
+      raise ValueError(f'Invalid row number {row}')
+
+    if self._seating[row][letter] is not None:
+      raise ValueError(f'seat {seat} already occupied ')
+
+    self._seating[row][letter]=passenger
+
+
+
+
+class Aircraft:
+
+  def __init__(self,registration,model,num_rows,num_seats_per_row):
+    self._registration=registration
+    self._model=model
+    self._num_rows=num_rows
+    self._num_seats_per_row=num_seats_per_row
+
+  def registration(self):
+    return self._registration
+
+  def model(self):
+    return self._model
+
+  def seating_plan(self):
+    return (range(1,self._num_rows+1),'ABCDEFGHJK'[:self._num_seats_per_row])
+
+f=Flight('BA758',Aircraft('G-EUPT','Airbus 0ES',num_rows=22,num_seats_per_row=7))
+print(f.allocate_seat('12A','Ram'))
+# print(f.allocate_seat('12A','kumar'))
+
+from pprint import pprint as pp
+
+pp(f._seating)
+
+```
+### output
+```
+None
+[None,
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': 'Ram', 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None},
+ {'A': None, 'B': None, 'C': None, 'D': None, 'E': None, 'F': None, 'G': None}]
+ ```
