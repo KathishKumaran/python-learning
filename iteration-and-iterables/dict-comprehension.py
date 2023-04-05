@@ -9,3 +9,7 @@ print(capital_to_country)
 from pprint import pprint as pp
 
 pp(capital_to_country)
+
+a= ['hai','hello','fox','hotel','elephant']
+b={x[0]:x for x in a}
+print(b)
