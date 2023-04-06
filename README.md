@@ -2077,3 +2077,157 @@ print(f.make_boarding_cards(console_card_printer))
 
 None
 ```
+
+## File I/O and Resource Management
+### Resources
+* Program element that must be released or closed after use
+* Python provide special syntax for managing resources
+
+## open()
+* Open a file for reading or writing
+* file:the path to the file (required)
+* mode: read,write or append, plus binary or text
+* encoding: encoding to use in a text mode
+* open() returns a file-like object
+
+### open() mode
+#### mode:
+* r-read
+* w-write
+* a-append
+#### selector
+* b-binary
+* t-text
+
+> wb - write binary
+
+> at - append text
+
+### write()
+* write() returns the number of codepoints written. Don't sum these values to determine file length
+
+```
+f=open('learning.txt',mode='wt',encoding='utf-8')
+
+f.write('what are you doing man\n')
+f.write('I am doing learning\n')
+f.write('out of memory')
+f.close()
+exit()
+```
+### reading text
+```
+f=open('learning.txt',mode='rt',encoding='utf-8')
+print(f.read(23))
+print(f.read())
+print(f.read())
+f.seek(0)
+print(f.readline())
+print(f.readline())
+print(f.readline())
+f.seek(0)
+print(f.readlines())
+f.close()
+```
+### output
+```
+what are you doing man
+
+I am doing learning
+out of memory
+
+what are you doing man
+
+I am doing learning
+
+out of memory
+['what are you doing man\n', 'I am doing learning\n', 'out of memory']
+```
+### file iteration
+* use sys.stdout.write() instead of print.It won't add new lines like print()
+
+```
+import sys
+
+f=open('learning.txt',mode='rt',encoding='utf-8')
+for line in f:
+  # print(line)
+  sys.stdout.write(line)
+f.close()
+```
+### output
+```
+what are you doing man
+I am doing learning
+out of memoryHai How are you
+I am fine
+what about you
+I am good
+```
+### with-block
+* control flow structure for managing resources
+* can be used with any objects - such as files - which support the context-manager protocol
+
+## file-like-objects
+* object that behave like file
+* a semi-formal protocol
+* file behaviours are too varied for a fully specified protocol
+* use a EAFP approach with file like objects when necessary
+
+```
+def words_per_line(flo):
+  return [len(line.split()) for line in flo.readlines()]
+
+with open('learning.txt',mode='rt',encoding='utf-8') as real_file:
+  wpl=words_per_line(real_file)
+print(wpl)
+print(type(real_file))
+
+from urllib.request import urlopen
+
+with urlopen('http://sixty-north.com/c/t.txt') as web_file:
+  c=words_per_line(web_file)
+print(c)
+print(type(web_file))
+
+```
+### output
+```
+[5, 4, 6, 3, 3, 3]
+<class '_io.TextIOWrapper'>
+[6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 7, 8, 14, 12, 8]
+<class 'http.client.HTTPResponse'>
+```
+
+## context-manager:
+```
+class RefrigeratorRaider:
+
+  def open(self):
+    print('open fridge door')
+
+  def take(self,food):
+    print(f'finding {food}')
+    if food=='deep fried pizza':
+      raise RuntimeError('Health warning')
+    print(f'Taking {food}')
+
+  def close(self):
+    print('close fridge door')
+
+def raid(food):
+  r=RefrigeratorRaider()
+  r.open()
+  r.take(food)
+  r.close()
+
+print(raid('bacon'))
+```
+### output
+```
+open fridge door
+finding bacon
+Taking bacon
+close fridge door
+None
+```
