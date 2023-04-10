@@ -1,3 +1,60 @@
+# Phython
+
+> Python is a popular programming language.It is used for:
+
+* web development (server-side),
+* software development,
+* mathematics,
+* system scripting.
+
+## Uses
+* Python can be used on a server to create web applications.
+* Python can be used alongside software to create workflows.
+* Python can connect to database systems. It can also read and modify files.
+* Python can be used to handle big data and perform complex mathematics.
+* Python can be used for rapid prototyping, or for production-ready software development.
+* Python works on different platforms (Windows, Mac, Linux etc).
+* Python has syntax that allows developers to write programs with fewer lines than some other programming languages.
+* Python runs on an interpreter system, meaning that code can be executed as soon as it is written. This means that prototyping can be very quick.
+* Python can be treated in a procedural way, an object-oriented way or a functional way.
+
+## Installing Python in ubuntu:
+
+> 	In recent versions of Ubuntu, we already have python3. We can check by opening the terminal and type python3 and press enter. Then we can see three arrows which are waiting for us to write the python code.
+
+## REPL:
+* R - Read
+* E - Evaluate
+* P - Print
+* L - Loop
+
+## Significant Whitespaces:
+* Requires readable code
+* No clutter
+* Human and computer can’t get out of sync
+
+## Printing in python2 and python3:
+> For printing in python2 , parentheses are not required but in python3, parentheses are required.
+
+### Example:
+* In python2, print “Hello”
+* In python3, print(“Hello”)
+
+## Using Standard Library:
+### Import keyword:
+* The basic form of importing a module is simply the import keyword followed by the space and module name.
+* Syntax: import module_name
+* For Example: import math
+* Syntax:module_name.attribute_name
+* For Example: math.sqrt(81)
+* If we don't know what are the functions available in the math module then we can use help() or help(module_name).
+
+## Scalar Types:
+* Int 		- arbitrary precision integer(whole numbers)
+* Float 		- 64-bit floating point numbers(fractions)
+* None type 	- null object
+* Bool 		- logical values (true or false)
+
 # String
 * Can be enclosed in a single quotes or double quotes.
 * \ (backslash) can used to escape single quotes
@@ -2078,6 +2135,90 @@ print(f.make_boarding_cards(console_card_printer))
 None
 ```
 
+## Polymorphism
+* In Python, Polymorphism lets us define methods in the child class that have the same name as the methods in the parent class
+
+```
+class India():
+	def capital(self):
+		print("New Delhi is the capital of India.")
+
+	def language(self):
+		print("Hindi is the most widely spoken language of India.")
+
+	def type(self):
+		print("India is a developing country.")
+
+class USA():
+	def capital(self):
+		print("Washington, D.C. is the capital of USA.")
+
+	def language(self):
+		print("English is the primary language of USA.")
+
+	def type(self):
+		print("USA is a developed country.")
+
+obj_ind = India()
+obj_usa = USA()
+
+for country in (obj_ind, obj_usa):
+	country.capital()
+	country.language()
+	country.type()
+```
+### output
+```
+New Delhi is the capital of India.
+Hindi is the most widely spoken language of India.
+India is a developing country.
+Washington, D.C. is the capital of USA.
+English is the primary language of USA.
+USA is a developed country.
+```
+
+## Inheritance
+* Inheritance allows us to define a class that inherits all the methods and properties from another class.
+
+```
+class Bird:
+  def intro(self):
+    print("There are many types of birds.")
+
+  def flight(self):
+    print("Most of the birds can fly but some cannot.")
+
+class sparrow(Bird):
+  def flight(self):
+    print("Sparrows can fly.")
+
+class ostrich(Bird):
+  def flight(self):
+    print("Ostriches cannot fly.")
+
+obj_bird = Bird()
+obj_spr = sparrow()
+obj_ost = ostrich()
+
+obj_bird.intro()
+obj_bird.flight()
+
+obj_spr.intro()
+obj_spr.flight()
+
+obj_ost.intro()
+obj_ost.flight()
+```
+### output
+```
+There are many types of birds.
+Most of the birds can fly but some cannot.
+There are many types of birds.
+Sparrows can fly.
+There are many types of birds.
+Ostriches cannot fly.
+```
+
 ## File I/O and Resource Management
 ### Resources
 * Program element that must be released or closed after use
@@ -2173,6 +2314,7 @@ I am good
 * a semi-formal protocol
 * file behaviours are too varied for a fully specified protocol
 * use a EAFP approach with file like objects when necessary
+
 
 ```
 def words_per_line(flo):
